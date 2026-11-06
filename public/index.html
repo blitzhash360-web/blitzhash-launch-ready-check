@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="BlitzHash Launch-Ready Check — scan a live URL for security headers, leaked secrets, rate limits, SEO basics, and auth smells. Free launch score out of 100." />
+  <meta property="og:title" content="BlitzHash Launch-Ready Check" />
+  <title>BlitzHash Launch-Ready Check</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <p class="eyebrow">BlitzHash · Check stage</p>
+      <h1>Launch-Ready Check</h1>
+      <p class="lede">Paste your live app URL. Get a launch score out of 100 — security headers, leaked keys, rate-limit signals, SEO basics, and auth redirect smells. Built for founders shipping with Lovable, Bolt, Cursor, v0, and friends.</p>
+    </header>
+
+    <form id="scan-form" class="card">
+      <label for="url">Live URL</label>
+      <div class="row">
+        <input id="url" name="url" type="url" required placeholder="https://your-app.example" autocomplete="url" />
+        <button type="submit" id="go">Scan</button>
+      </div>
+      <p class="hint">Public http(s) URLs only on this demo. For localhost, run the CLI.</p>
+    </form>
+
+    <section id="status" class="status" hidden></section>
+    <section id="results" hidden></section>
+
+    <section class="card muted">
+      <h2>What we check</h2>
+      <ul>
+        <li>Security headers (CSP, HSTS, X-Frame-Options, nosniff, Referrer-Policy, Permissions-Policy)</li>
+        <li>Exposed secret patterns in HTML / same-origin JS bundles</li>
+        <li>Rate-limit header signals (gentle one-request probe)</li>
+        <li>SEO basics: title, meta description, og:title, viewport, robots</li>
+        <li>Auth smells: open-redirect query params, weak Set-Cookie flags</li>
+      </ul>
+      <p>Heuristic — not a penetration test. Free 15-minute launch review: <a href="https://blitzhash.com" rel="noopener">blitzhash.com</a></p>
+    </section>
+
+    <footer>
+      <p>Built by BlitzHash · <a href="https://blitzhash.com">blitzhash.com</a> · <a href="https://github.com/blitzhash360-web/blitzhash-launch-ready-check">GitHub</a></p>
+    </footer>
+  </main>
+  <script src="/app.js"></script>
+</body>
+</html>

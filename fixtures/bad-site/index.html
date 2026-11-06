@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Intentionally weak for CI: no viewport, no description, noindex, no CSP via meta -->
+  <meta name="robots" content="noindex, nofollow" />
+  <title>x</title>
+  <script src="/app.js"></script>
+</head>
+<body>
+  <h1>Demo store</h1>
+  <p>This fixture intentionally fails launch-ready checks. Fake values only.</p>
+  <!-- open redirect smell -->
+  <a href="/login?next=https://evil.example/phish">Continue to login</a>
+  <form action="/login?redirect=https://attacker.example/">
+    <input name="email" />
+    <button>Sign in</button>
+  </form>
+  <!-- env-like / hard-coded secret leaks in HTML (not real credentials) -->
+  <script>
+    const API_KEY = "bh_fixture_api_key_DO_NOT_USE_1234567890";
+    const secret = "fixture_only_secret_token_abcdef123456";
+    window.CONFIG = { DATABASE_URL: "postgres://admin:SuperSecretPass123@db.internal:5432/app" };
+  </script>
+</body>
+</html>

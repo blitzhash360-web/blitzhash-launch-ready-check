@@ -1,0 +1,54 @@
+{
+  "name": "blitzhash-launch-ready-check",
+  "version": "1.0.0",
+  "description": "Scan a live URL for launch-readiness: security headers, leaked secrets, rate limits, SEO basics, and auth redirect smells. Score out of 100.",
+  "bin": {
+    "blitzhash-launch-ready-check": "./bin/blitzhash-launch-ready-check.js",
+    "launch-ready-check": "./bin/blitzhash-launch-ready-check.js"
+  },
+  "main": "./src/index.js",
+  "type": "commonjs",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node src/server.js",
+    "cli": "node bin/blitzhash-launch-ready-check.js",
+    "test": "node --test test/*.test.js",
+    "fixture-server": "node fixtures/serve.js"
+  },
+  "keywords": [
+    "security",
+    "headers",
+    "launch-readiness",
+    "seo",
+    "csp",
+    "hsts",
+    "secrets",
+    "vibe-coding",
+    "lovable",
+    "audit",
+    "cli"
+  ],
+  "author": "BlitzHash",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blitzhash360-web/blitzhash-launch-ready-check.git"
+  },
+  "homepage": "https://blitzhash.com",
+  "bugs": {
+    "url": "https://github.com/blitzhash360-web/blitzhash-launch-ready-check/issues"
+  },
+  "files": [
+    "bin",
+    "src",
+    "public",
+    "fixtures",
+    "LICENSE",
+    "README.md"
+  ],
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

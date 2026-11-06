@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install
+        run: npm install
+      - name: Unit + fixture scan tests
+        run: npm test
+      - name: CLI against fixture server
+        run: |
+          node fixtures/serve.js &
+          sleep 1
+          node bin/blitzhash-launch-ready-check.js --url http://127.0.0.1:8765 --no-color --json > /tmp/scan.json
+          node -e '
+            const r = require("/tmp/scan.json");
+            if (!r.ok) { console.error(r); process.exit(1); }
+            const cats = new Set(r.findings.map(f => f.category));
+            for (const need of ["headers","secrets","seo","auth","rate_limit"]) {
+              if (![...cats].includes(need) && need === "secrets" && !(r.categories.secrets.count > 0)) {
+                console.error("missing category", need, r);
+                process.exit(1);
+              }
+            }
+            if (!(r.categories.secrets.count > 0)) { console.error("expected secret findings", r); process.exit(1); }
+            if (r.score >= 90) { console.error("fixture should not score A", r.score); process.exit(1); }
+            console.log("fixture scan ok, score", r.score, "findings", r.findings.length);
+          '
+      - name: Docker build
+        run: docker build -t blitzhash-launch-ready-check:ci .
