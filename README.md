@@ -1,32 +1,42 @@
 # BlitzHash Launch-Ready Check
 
-**Scan any live URL for launch readiness — security headers, leaked keys, rate limits, SEO basics, and auth smells — and get a score out of 100.**
+**Scan a live URL before launch: security headers, leaked keys, rate-limit signals, SEO basics and auth smells, with a score out of 100 and a fix for each finding. No account, no keys.**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-teal.svg)](LICENSE)
 [![Node >=18](https://img.shields.io/badge/node-%3E%3D18-brightgreen)](https://nodejs.org)
 [![CI](https://github.com/blitzhash360-web/blitzhash-launch-ready-check/actions/workflows/ci.yml/badge.svg)](https://github.com/blitzhash360-web/blitzhash-launch-ready-check/actions/workflows/ci.yml)
 [![BlitzHash](https://img.shields.io/badge/Built%20by-BlitzHash-0a1628)](https://blitzhash.com)
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/blitzhash360-web/blitzhash-launch-ready-check)
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/blitzhash360-web/blitzhash-launch-ready-check)
-
-> One-click buttons deploy this Dockerfile. You can also `railway up` / `render blueprint` from a clone, or run the image on Zeabur/Fly/any container host.
+![Launch-Ready Check scanning blitzhash.com](docs/screenshot.png)
+<sub>Real output of the CLI scanning our own site, [blitzhash.com](https://blitzhash.com). It scored 89/100: the one finding is a heuristic about rate-limit headers.</sub>
 
 ## Quick start (3 steps)
 
+You need [Node.js 18 or newer](https://nodejs.org). Nothing else.
+
 ```bash
-# 1. Clone (or npx from GitHub)
+# 1. Scan any live URL with one command (point it at a site you own or have permission to test)
+npx -y github:blitzhash360-web/blitzhash-launch-ready-check --url https://example.com
+
+# 2. Use it as a CI gate: exit code 1 if the score is under 80
+npx -y github:blitzhash360-web/blitzhash-launch-ready-check --url https://your-app.com --fail-under 80
+
+# 3. Or run the small web UI from a clone (open http://localhost:3000)
 git clone https://github.com/blitzhash360-web/blitzhash-launch-ready-check.git
-cd blitzhash-launch-ready-check && npm install
-
-# 2. Scan a live URL with the CLI
-node bin/blitzhash-launch-ready-check.js --url https://example.com
-
-# 3. Or start the small web UI (open http://localhost:3000)
-npm start
+cd blitzhash-launch-ready-check && npm install && npm start
 ```
 
-No API keys. No account. Point it at a site you own or have permission to test.
+No API keys. No account. It sends a few ordinary GET requests (plus one gentle rate-limit probe, which `--no-probe` turns off).
+
+<details>
+<summary>One-click deploy of the web UI (Railway, Render)</summary>
+
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template?template=https://github.com/blitzhash360-web/blitzhash-launch-ready-check)
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/blitzhash360-web/blitzhash-launch-ready-check)
+
+These buttons deploy the Dockerfile. You can also run the image on Zeabur, Fly or any container host.
+
+</details>
 
 ## What it checks
 
